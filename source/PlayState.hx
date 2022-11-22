@@ -131,7 +131,6 @@ class PlayState extends MusicBeatState
 	private var generatedMusic:Bool = false;
 	private var endingSong:Bool = false;
 	private var startingSong:Bool = false;
-	private var updateTime:Bool = false;
 
 	public static var chartingMode:Bool = false;
 
@@ -510,7 +509,6 @@ class PlayState extends MusicBeatState
 		#end
 
 		startingSong = true;
-		updateTime = true;
 
 		precache();
 
@@ -796,18 +794,11 @@ class PlayState extends MusicBeatState
 		dialogueCount++;
 	}
 
-	var previousFrameTime:Int = 0;
-	var lastReportedPlayheadPosition:Int = 0;
-	var songTime:Float = 0;
-
 	function startSong():Void
 	{
 		System.gc();
 
 		startingSong = false;
-
-		previousFrameTime = FlxG.game.ticks;
-		lastReportedPlayheadPosition = 0;
 
 		FlxG.sound.playMusic(instSource, 1, false);
 		FlxG.sound.music.onComplete = finishSong;
@@ -823,7 +814,6 @@ class PlayState extends MusicBeatState
 
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
-		uiHUD.fadeInTime();
 
 		#if desktop
 		// Updating Discord Rich Presence (with Time Left)
@@ -1255,34 +1245,8 @@ class PlayState extends MusicBeatState
 			Conductor.songPosition += FlxG.elapsed * 1000;
 
 			if (!paused)
-			{
-				songTime += FlxG.game.ticks - previousFrameTime;
-				previousFrameTime = FlxG.game.ticks;
-
 				if (Conductor.lastSongPos != Conductor.songPosition)
-				{
-					songTime = (songTime + Conductor.songPosition) / 2;
 					Conductor.lastSongPos = Conductor.songPosition;
-				}
-
-				if (updateTime)
-				{
-					var curTime:Float = FlxG.sound.music.time - SaveData.get(NOTE_OFFSET);
-					if (curTime < 0)
-						curTime = 0;
-					uiHUD.songPercent = (curTime / songLength);
-
-					var secondsTotal:Int = Math.floor((songLength - curTime) / 1000);
-					if (secondsTotal < 0)
-						secondsTotal = 0;
-
-					var minutesRemaining:Int = Math.floor(secondsTotal / 60);
-					var secondsRemaining:String = '' + secondsTotal % 60;
-					if (secondsRemaining.length < 2)
-						secondsRemaining = '0' + secondsRemaining; // Dunno how to make it display a zero first in Haxe lol
-					uiHUD.timeTxt.text = minutesRemaining + ':' + secondsRemaining;
-				}
-			}
 		}
 
 		if (generatedMusic && PlayState.SONG.notes[Std.int(curStep / 16)] != null)
@@ -1874,7 +1838,6 @@ class PlayState extends MusicBeatState
 	{
 		var finishCallback:Void->Void = endSong; // In case you want to change it in a specific song.
 
-		updateTime = false;
 		FlxG.sound.music.volume = 0;
 		if (SONG.needsVoices)
 		{
@@ -1898,12 +1861,10 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
-		uiHUD.fadeOutTime();
 		canPause = false;
 		endingSong = true;
 		camZooming = false;
 		inCutscene = false;
-		updateTime = false;
 
 		deathCounter = 0;
 		seenCutscene = false;

@@ -1,9 +1,7 @@
 package;
 
-import flixel.tweens.FlxEase;
 import flixel.math.FlxMath;
 import flixel.FlxG;
-import Song.SwagSong;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.text.FlxText;
@@ -11,70 +9,30 @@ import flixel.ui.FlxBar;
 import flixel.FlxBasic;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
+using StringTools;
+
 // make it compatible with other states? ex: not to use playstate is pixel and use an arg or smth
 class HUD extends FlxTypedGroup<FlxBasic>
 {
 	private var healthBarBG:AttachedSprite;
-	private var timeBarBG:AttachedSprite;
 
 	private var healthBar:FlxBar;
-	private var timeBar:FlxBar;
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
 
 	public var scoreTxt:FlxText;
-	public var timeTxt:FlxText;
-
-    var feWatermark:FlxText;
+    private var feWatermark:FlxText;
+    private var songMark:FlxText;
 
 	private var scoreTxtTween:FlxTween;
-
-	public var songPercent(default, set):Float = 0;
-
-    private function set_songPercent(value:Float):Float
-    {
-        timeBar.value = value;
-        return value;
-    }
 
     public function new(iconP1Det:IconDetails, iconP2Det:IconDetails)
     {
         super();
 
-        var hideTime = SaveData.get(HIDE_TIME);
         var hideHud = SaveData.get(HIDE_HUD);
         var downScroll = SaveData.get(DOWN_SCROLL);
-
-        timeTxt = new FlxText(0, 20, 400, "", 32);
-        timeTxt.screenCenter(X);
-        timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        timeTxt.scrollFactor.set();
-        timeTxt.alpha = 0;
-        timeTxt.borderSize = 2;
-        timeTxt.visible = !hideTime;
-        if (downScroll)
-            timeTxt.y = FlxG.height - 45;
-
-        timeBarBG = new AttachedSprite('timeBar');
-        timeBarBG.x = timeTxt.x;
-        timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
-        timeBarBG.scrollFactor.set();
-        timeBarBG.alpha = 0;
-        timeBarBG.visible = !hideTime;
-        timeBarBG.xAdd = -4;
-        timeBarBG.yAdd = -4;
-        add(timeBarBG);
-
-        timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this, '', 0, 1);
-        timeBar.scrollFactor.set();
-        timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
-        timeBar.numDivisions = 800;
-        timeBar.alpha = 0;
-        timeBar.visible = !hideTime;
-        add(timeBar);
-        add(timeTxt);
-        timeBarBG.sprTracker = timeBar;
 
         healthBarBG = new AttachedSprite('healthBar');
         healthBarBG.y = FlxG.height * 0.89;
@@ -109,14 +67,20 @@ class HUD extends FlxTypedGroup<FlxBasic>
         scoreTxt.visible = !hideHud;
         add(scoreTxt);
 
-        feWatermark = new FlxText(0, 0, 0, "FOREVER ENGINE v" + MainMenuState.feEngineVersion, 18);
+        feWatermark = new FlxText(0, 0, 0, "FOREVER ENGINE LEGACY v" + MainMenuState.feEngineVersion, 18);
         feWatermark.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE);
         feWatermark.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
         feWatermark.setPosition(FlxG.width - (feWatermark.width + 5), 5);
         feWatermark.antialiasing = SaveData.get(ANTIALIASING);
-        feWatermark.scrollFactor.set();
         add(feWatermark);
     
+        // hardcoded to hard cuz its the only diff lol, if you want to change it to bind the song diff ask me for it or find you way
+        songMark = new FlxText(0, (downScroll ? FlxG.height - 40 : 10), 0, '- ${Paths.formatToSongPath(PlayState.SONG.song).toUpperCase().replace("-", " ")} [HARD] -');
+        songMark.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE);
+        songMark.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
+        songMark.screenCenter(X);
+        songMark.antialiasing = SaveData.get(ANTIALIASING);
+        add(songMark);
     }
 
     private function reloadHealthBarColors(iconP1Det:IconDetails, iconP2Det:IconDetails)
@@ -124,21 +88,6 @@ class HUD extends FlxTypedGroup<FlxBasic>
         healthBar.createFilledBar(FlxColor.fromRGB(iconP2Det.healthColors[0], iconP2Det.healthColors[1], iconP2Det.healthColors[2]),
             FlxColor.fromRGB(iconP1Det.healthColors[0], iconP1Det.healthColors[1], iconP1Det.healthColors[2]));
         healthBar.updateBar();
-    }
-
-    public function fadeInTime()
-    {
-        FlxTween.tween(timeBarBG, { alpha: 1 }, 0.5, { ease: FlxEase.circOut });
-        FlxTween.tween(timeBar, { alpha: 1 }, 0.5, { ease: FlxEase.circOut });
-        FlxTween.tween(timeTxt, { alpha: 1 }, 0.5, { ease: FlxEase.circOut });
-    }
-
-    // im dumb okay
-    public function fadeOutTime()
-    {
-        FlxTween.tween(timeBarBG, { alpha: 0 }, 0.5, { ease: FlxEase.circOut });
-        FlxTween.tween(timeBar, { alpha: 0 }, 0.5, { ease: FlxEase.circOut });
-        FlxTween.tween(timeTxt, { alpha: 0 }, 0.5, { ease: FlxEase.circOut });
     }
 
     public function doScoreZoom()
@@ -163,6 +112,7 @@ class HUD extends FlxTypedGroup<FlxBasic>
         scoreTxt.text = getScoreFormat();
         healthBar.value = PlayState.instance.health;
 
+        // make it change graphic size instead of scale?
         var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
 		iconP1.scale.set(mult, mult);
 		iconP1.updateHitbox();
