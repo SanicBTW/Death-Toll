@@ -42,21 +42,15 @@ class SaveData
 		BAD_WINDOW => 135,
 		SHIT_WINDOW => 166,
 		SAFE_FRAMES => 10,
-		ALLOW_FILESYS => false,
-		ANSWERED => false,
 		FREESTYLE_BF => true,
 		COMBO_STACKING => true,
 		PAUSE_ON_FOCUS_LOST => true,
 		SNAP_CAMERA_ON_GAMEOVER => true,
 		COUNTERS_FONT => "Funkin",
 		OSU_MANIA_SIMULATION => true,
-		ALLOW_ONLINE => false,
-		SMALL_RATING_SIZE => true,
-		LEGACY_RATINGS_STYLE => "Classic",
-		USE_CLASSIC_COMBOS => false,
 		RATINGS_STYLE => "Default",
+		COMBOS_STYLE => "Default",
 		NO_RESET => false,
-		OLD_SONG_SYSTEM => false,
 		FULLSCREEN => false
 	];
 
@@ -245,20 +239,14 @@ enum abstract Settings(String) to String
 	var SHIT_WINDOW = "ShitWindow";
 	// miss window???
 	var SAFE_FRAMES = "SafeFrames";
-	var ALLOW_FILESYS = "AllowFileSys";
-	var ANSWERED = "AnsweredRequests";
 	var FREESTYLE_BF = "FreestyleBF";
 	var COMBO_STACKING = "ComboStacking";
 	var PAUSE_ON_FOCUS_LOST = "PauseOnFocusLost";
 	var SNAP_CAMERA_ON_GAMEOVER = "SnapCameraOnGameover";
 	var COUNTERS_FONT = "CounterFont";
 	var OSU_MANIA_SIMULATION = "OsuManiaSimulation";
-	var ALLOW_ONLINE = "AllowOnlineFetching";
-	var SMALL_RATING_SIZE = "SmallRatingSize";
-	var LEGACY_RATINGS_STYLE = "LegacyRatingStyle";
-	var USE_CLASSIC_COMBOS = "UseClassicStyles";
 	var RATINGS_STYLE = "RatingsStyle";
+	var COMBOS_STYLE = "ComboStyle";
 	var NO_RESET = "NoReset";
-	var OLD_SONG_SYSTEM = "OldSongSystem";
 	var FULLSCREEN = "FullScreen";
 }

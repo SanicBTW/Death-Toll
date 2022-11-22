@@ -38,10 +38,6 @@ class MusicBeatState extends FlxUIState
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 
-	public var notificationCamera:FlxCamera;
-	public var notificationGroup:FlxTypedGroup<Notification>;
-
-	// private static var instance:MusicBeatState;
 	#if android
 	var virtualPad:FlxVirtualPad;
 	var androidControls:AndroidControls;
@@ -152,27 +148,11 @@ class MusicBeatState extends FlxUIState
 		FlxTransitionableState.skipNextTransOut = false;
 
 		super.create();
-
-		if (notificationCamera == null)
-			notificationCamera = new FlxCamera();
-
-		notificationCamera.bgColor = 0x0;
-
-		FlxG.cameras.add(notificationCamera, false);
-
-		if (notificationGroup == null)
-			notificationGroup = new FlxTypedGroup<Notification>();
-
-		notificationGroup.cameras = [notificationCamera];
-		add(notificationGroup);
-
-		// instance = this;
 	}
 
 	override function update(elapsed:Float)
 	{
 		updateSB();
-		updateNotifications();
 		checkKeyFuncs();
 
 		super.update(elapsed);
@@ -197,28 +177,6 @@ class MusicBeatState extends FlxUIState
 				else
 					rollbackSection();
 			}
-		}
-	}
-
-	private function updateNotifications()
-	{
-		var dumb:Int = 0;
-		if (notificationGroup != null)
-		{
-			notificationGroup.forEachAlive(function(notification:Notification)
-			{
-				notification.scrollFactor.set();
-				notification.y = 20 + ((notification.box.height + 20) * dumb);
-
-				if (notification.shouldDie)
-				{
-					notificationGroup.remove(notification, true);
-					notification.kill();
-					notification.destroy();
-				}
-
-				dumb++;
-			});
 		}
 	}
 

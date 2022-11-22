@@ -25,12 +25,13 @@ class MainMenuState extends MusicBeatState
 {
 	public static var fnfVersion:String = "0.2.7.1";
 	public static var psychEngineVersion:String = '0.3.2h'; // This is also used for Discord RPC
+	public static var feEngineVersion:String = '0.3.1'; //THIS IS FOR THE FOREVER ENGINE THING SO I DONT WANNA HEAR FOR DISCORDRPC
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 
-	var optionShit:Array<String> = ['story_mode', 'freeplay', 'options'];
+	var optionShit:Array<String> = ['freeplay', 'options'];
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -104,10 +105,7 @@ class MainMenuState extends MusicBeatState
 		var versionShit:FlxText = new FlxText(8, FlxG.height
 			- 64, 0,
 			"Engine v"
-			+ Application.current.meta.get('version')
-			+ " DEVELOPMENT BUILD ("
-			+ Application.current.meta.get("build")
-			+ ")", 12);
+			+ Application.current.meta.get('version'), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -189,8 +187,6 @@ class MainMenuState extends MusicBeatState
 
 								switch (daChoice)
 								{
-									case 'story_mode':
-										MusicBeatState.switchState(new StoryMenuState());
 									case 'freeplay':
 										MusicBeatState.switchState(new FreeplayState());
 									case 'options':

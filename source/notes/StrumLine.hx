@@ -64,7 +64,7 @@ class StrumLine extends FlxTypedGroup<FlxBasic>
 		if (botPlay == true && isDad == false)
 		{
 			botPlayTxt = new FlxText(400, 100 + (SaveData.get(DOWN_SCROLL) ? FlxG.height - 150 : 0), FlxG.width - 800, "BOTPLAY", 32);
-			botPlayTxt.setFormat(PlayState.instance.curFont, 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			botPlayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			botPlayTxt.scrollFactor.set();
 			botPlayTxt.borderSize = 1.25;
 			// bru

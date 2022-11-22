@@ -26,10 +26,11 @@ class HUD extends FlxTypedGroup<FlxBasic>
 	public var scoreTxt:FlxText;
 	public var timeTxt:FlxText;
 
+    var feWatermark:FlxText;
+
 	private var scoreTxtTween:FlxTween;
 
 	public var songPercent(default, set):Float = 0;
-    private var curFont:String = null;
 
     private function set_songPercent(value:Float):Float
     {
@@ -45,11 +46,9 @@ class HUD extends FlxTypedGroup<FlxBasic>
         var hideHud = SaveData.get(HIDE_HUD);
         var downScroll = SaveData.get(DOWN_SCROLL);
 
-        curFont = (PlayState.isPixelStage ? Paths.font("pixel.otf") : Paths.font("vcr.ttf"));
-
         timeTxt = new FlxText(0, 20, 400, "", 32);
         timeTxt.screenCenter(X);
-        timeTxt.setFormat(curFont, 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         timeTxt.scrollFactor.set();
         timeTxt.alpha = 0;
         timeTxt.borderSize = 2;
@@ -104,11 +103,20 @@ class HUD extends FlxTypedGroup<FlxBasic>
         reloadHealthBarColors(iconP1Det, iconP2Det);
 
         scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
-        scoreTxt.setFormat(curFont, 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         scoreTxt.scrollFactor.set();
         scoreTxt.borderSize = 1.25;
         scoreTxt.visible = !hideHud;
         add(scoreTxt);
+
+        feWatermark = new FlxText(0, 0, 0, "FOREVER ENGINE v" + MainMenuState.feEngineVersion, 18);
+        feWatermark.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE);
+        feWatermark.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
+        feWatermark.setPosition(FlxG.width - (feWatermark.width + 5), 5);
+        feWatermark.antialiasing = SaveData.get(ANTIALIASING);
+        feWatermark.scrollFactor.set();
+        add(feWatermark);
+    
     }
 
     private function reloadHealthBarColors(iconP1Det:IconDetails, iconP2Det:IconDetails)

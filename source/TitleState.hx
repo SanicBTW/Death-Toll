@@ -61,26 +61,16 @@ class TitleState extends MusicBeatState
 		FlxG.sound.muteKeys = muteKeys;
 		FlxG.sound.volumeDownKeys = volumeDownKeys;
 		FlxG.sound.volumeUpKeys = volumeUpKeys;
-		#if STORAGE_ACCESS
 		#if android
 		FlxG.android.preventDefaultKeys = [BACK];
-		if (Permissions.hasPermission(Permissions.READ_EXTERNAL_STORAGE)
-			&& Permissions.hasPermission(Permissions.WRITE_EXTERNAL_STORAGE)
-			&& SaveData.get(ALLOW_FILESYS))
-		{
-			StorageAccess.checkStorage();
-		}
-		#end
-		#if windows
-		if (SaveData.get(ALLOW_FILESYS))
-		{
-			StorageAccess.checkStorage();
-		}
-		#end
 		#end
 
 		FlxG.keys.preventDefaultKeys = [TAB];
 		FlxG.mouse.visible = false;
+
+		PlayerSettings.init();
+		FlxG.save.bind('funkin', 'teamporters');
+		SaveData.loadSettings();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
@@ -89,8 +79,6 @@ class TitleState extends MusicBeatState
 		super.create();
 
 		Highscore.load();
-
-		setupFonts();
 
 		if (FlxG.save.data.weekCompleted != null)
 		{
@@ -130,6 +118,7 @@ class TitleState extends MusicBeatState
 			}
 		}
 
+		setupFonts();
 		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
@@ -211,13 +200,6 @@ class TitleState extends MusicBeatState
 	{
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
-
-		if (FlxG.keys.justPressed.F)
-		{
-			// FlxG.fullscreen = !FlxG.fullscreen;
-			osu.BeatmapConverter.convertBeatmap();
-			// MusicBeatState.switchState(new ExpState());
-		}
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
 

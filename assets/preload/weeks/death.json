@@ -1,0 +1,20 @@
+{
+	"songs": [
+		["death-toll", "beelze", [165, 0, 77]]
+	],
+
+	"weekCharacters": [
+		"",
+		"bf",
+		"gf"
+	],
+	"weekBackground": "hell",
+
+	"storyName": "",
+	"weekBefore": "",
+	"weekName": "hell",
+	"startUnlocked": true,
+
+	"hideStoryMode": false,
+	"hideFreeplay": false
+}

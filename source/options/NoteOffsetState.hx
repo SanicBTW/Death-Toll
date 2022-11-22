@@ -41,6 +41,8 @@ class NoteOffsetState extends MusicBeatState
 
 	var changeModeText:FlxText;
 
+	private static var createdColor = FlxColor.fromRGB(204, 66, 66);
+
 	// TODO: REWRITE
 	override public function create()
 	{
@@ -105,11 +107,11 @@ class NoteOffsetState extends MusicBeatState
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.35;
 
-		rating = new FlxSprite().loadGraphic(Paths.getLibraryPath(SaveData.get(LEGACY_RATINGS_STYLE) + "/sick.png", "UILib"));
+		rating = Ratings.generateRating("sick", true, "late");
 		rating.cameras = [camHUD];
-		rating.setGraphicSize(Std.int(rating.width * 0.7));
-		rating.updateHitbox();
-		rating.antialiasing = SaveData.get(ANTIALIASING);
+		//rating.setGraphicSize(Std.int(rating.width * 0.7));
+		//rating.updateHitbox();
+		//rating.antialiasing = SaveData.get(ANTIALIASING);
 
 		add(rating);
 
@@ -126,11 +128,11 @@ class NoteOffsetState extends MusicBeatState
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite(43 * daLoop).loadGraphic(Paths.image('num' + i));
+			var numScore = Ratings.generateCombo(Std.string(i), true, false, createdColor, daLoop);
 			numScore.cameras = [camHUD];
-			numScore.setGraphicSize(Std.int(numScore.width * 0.5));
-			numScore.updateHitbox();
-			numScore.antialiasing = SaveData.get(ANTIALIASING);
+			//numScore.setGraphicSize(Std.int(numScore.width * 0.5));
+			//numScore.updateHitbox();
+			//numScore.antialiasing = SaveData.get(ANTIALIASING);
 			comboNums.add(numScore);
 			daLoop++;
 		}

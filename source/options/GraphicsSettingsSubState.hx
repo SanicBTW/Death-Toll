@@ -31,9 +31,6 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.onChange = onChangeFramerate;
 		#end
 
-		var option:Option = new Option('Small Ratings', "If enabled, the ratings sprite will be small", SMALL_RATING_SIZE, "bool", true);
-		addOption(option);
-
 		super();
 	}
 

@@ -45,9 +45,7 @@ class OptionsState extends MusicBeatState
 		'Visuals and UI',
 		'Audio',
 		'Ratings',
-		'Miscellaneous',
 		#if android 'Mobile Controls', #end
-		#if (STORAGE_ACCESS || ONLINE_SONGS) 'Revoke permissions' #end
 	];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 
@@ -76,34 +74,12 @@ class OptionsState extends MusicBeatState
 				openSubState(new AudioSettingsSubState());
 			case 'Ratings':
 				openSubState(new RatingsSubState());
-			// placeholder
-			case 'Miscellaneous':
-				openSubState(new MiscSettingsSubState());
 			case 'Adjust Delay and Combo':
 				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
 			#if android
 			case 'Mobile Controls':
 				openSubState(new android.AndroidControlsSubState());
 			#end
-			case 'Revoke permissions':
-				#if windows
-				DiscordClient.shutdown();
-				#end
-
-				TitleState.initialized = false;
-				TitleState.closedState = false;
-
-				SaveData.set(ALLOW_FILESYS, false);
-				SaveData.set(ALLOW_ONLINE, false);
-				SaveData.set(ANSWERED, false);
-				SaveData.saveSettings();
-
-				FlxG.mouse.visible = true;
-
-				FlxG.sound.music.fadeOut(0.3);
-				Main.tweenFPS(false, 0.5);
-				Main.tweenMemory(false, 0.5);
-				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
 		}
 	}
 
