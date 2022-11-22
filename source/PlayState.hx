@@ -263,9 +263,9 @@ class PlayState extends MusicBeatState
 		strumLines = new FlxTypedGroup<StrumLine>();
 
 		var placement = (FlxG.width / 2);
-		dadStrums = new StrumLine(placement - FlxG.width / 4, 4, true);
+		dadStrums = new StrumLine(placement + FlxG.width / 4, 4, true);
 		dadStrums.visible = (!SaveData.get(MIDDLE_SCROLL));
-		boyfriendStrums = new StrumLine(placement + (!SaveData.get(MIDDLE_SCROLL) ? (FlxG.width / 4) : 0), 4, false);
+		boyfriendStrums = new StrumLine(placement - (!SaveData.get(MIDDLE_SCROLL) ? (FlxG.width / 4) : 0), 4, false);
 
 		strumLines.add(dadStrums);
 		strumLines.add(boyfriendStrums);
