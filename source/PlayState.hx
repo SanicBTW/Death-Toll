@@ -263,7 +263,7 @@ class PlayState extends MusicBeatState
 
 		var placement = (FlxG.width / 2);
 		dadStrums = new StrumLine(placement + FlxG.width / 4, 4, true);
-		dadStrums.visible = (!SaveData.get(MIDDLE_SCROLL));
+		dadStrums.visible = false;
 		boyfriendStrums = new StrumLine(placement - (!SaveData.get(MIDDLE_SCROLL) ? (FlxG.width / 4) : 0), 4, false);
 
 		strumLines.add(dadStrums);
@@ -282,6 +282,12 @@ class PlayState extends MusicBeatState
 			strumLines.members[i].cameras = [strumHUD[i]];
 		}
 		add(strumLines);
+
+		// for making hud over the notes, stupid but better tbh lol
+		var hudcam = new FlxCamera();
+		hudcam.bgColor.alpha = 0;
+		allUIs.push(hudcam);
+		FlxG.cameras.add(hudcam);
 
 		FlxG.cameras.add(camOther);
 
@@ -476,7 +482,7 @@ class PlayState extends MusicBeatState
 			}
 		);
 		add(uiHUD);
-		uiHUD.cameras = [camHUD];
+		uiHUD.cameras = [hudcam];
 
 		generateSong();
 
