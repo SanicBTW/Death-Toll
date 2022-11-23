@@ -5,7 +5,6 @@ import Note.EventNote;
 import Section.SwagSection;
 import Song.SwagSong;
 import StageData.StageFile;
-import animateatlas.AtlasFrameMaker;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -219,6 +218,32 @@ class PlayState extends MusicBeatState
 	private var allUIs:Array<FlxCamera> = [];
 	public static var uiHUD:HUD;
 
+
+	var lavabottom:FlxSprite;
+var lavatop:FlxSprite;
+var glowleft:FlxSprite;
+var glowright:FlxSprite;
+
+var hellbell:Character;
+var bellY:Float;
+var bellX:Float;
+var pillar:Character;
+var beelzewalk:Character;
+var beelzescary:Character;
+var contract:FlxSprite;
+var contractY:Float;
+var contractStep:Float;
+
+var dawn:Boyfriend;
+var bf:Boyfriend;
+
+var lavamod:Float;
+var lavafloating:Float;
+var lavabtmY:Float;
+var lavatopY:Float;
+var glowLY:Float;
+var glowRY:Float;
+
 	override public function create()
 	{
 		instance = this;
@@ -410,6 +435,101 @@ class PlayState extends MusicBeatState
 					stageCurtains.updateHitbox();
 					add(stageCurtains);
 				}
+			/*case 'hell':
+				var resizeBG:Float = 0.75;
+	var wall:FlxSprite = new FlxSprite(0, 0);
+	wall.loadGraphic(Paths.image('death/wall'));
+	wall.setGraphicSize(Std.int(wall.width * resizeBG * 2));
+	wall.updateHitbox();
+	wall.antialiasing = true;
+	add(wall);
+
+	lavabottom = new FlxSprite();
+	lavabottom.frames = Paths.getSparrowAtlas('death/lavabottom');
+	lavabottom.animation.addByPrefix('lavabottom', 'lavabottom', 24, true);
+	lavabottom.animation.play('lavabottom');				
+	lavabottom.setGraphicSize(Std.int(lavabottom.width * resizeBG));
+	lavabottom.updateHitbox();
+	lavabottom.antialiasing = true;
+	lavabottom.x -= 2;
+	lavabottom.y += 1074;
+	add(lavabottom);
+			
+	var rocks:FlxSprite = new FlxSprite(109, 1140);
+	rocks.loadGraphic(Paths.image('death/rocks'));
+	rocks.setGraphicSize(Std.int(rocks.width * resizeBG * 2));
+	rocks.updateHitbox();
+	rocks.antialiasing = true;
+	add(rocks);
+
+	var floorbot:FlxSprite = new FlxSprite(1070, 1135);
+	floorbot.loadGraphic(Paths.image('death/floorbot'));
+	floorbot.setGraphicSize(Std.int(floorbot.width * resizeBG * 2));
+	floorbot.updateHitbox();
+	floorbot.antialiasing = true;
+	add(floorbot);
+
+	lavatop = new FlxSprite();
+	lavatop.frames = Paths.getSparrowAtlas('death/lavatop');
+	lavatop.animation.addByPrefix('lavatop', 'lavatop', 24, true);
+	lavatop.animation.play('lavatop');			
+	lavatop.setGraphicSize(Std.int(lavatop.width * resizeBG));
+	lavatop.updateHitbox();
+	lavatop.antialiasing = true;
+	lavatop.x -= 10;
+	lavatop.y += 1067;
+	add(lavatop);
+
+	glowleft = new FlxSprite();
+	glowleft.frames = Paths.getSparrowAtlas('death/glowleft');
+	glowleft.animation.addByPrefix('glowleft', 'glowleft', 24, true);
+	glowleft.animation.play('glowleft');			
+	glowleft.setGraphicSize(Std.int(glowleft.width * resizeBG));
+	glowleft.updateHitbox();
+	glowleft.antialiasing = true;
+	glowleft.x -= 403;
+	glowleft.y += 780;
+	add(glowleft);
+
+	glowright = new FlxSprite();
+	glowright.frames = Paths.getSparrowAtlas('death/glowright');
+	glowright.animation.addByPrefix('glowright', 'glowright', 24, true);
+	glowright.animation.play('glowright');			
+	glowright.setGraphicSize(Std.int(glowright.width * resizeBG));
+	glowright.updateHitbox();
+	glowright.antialiasing = true;
+	glowright.x += 1823;
+	glowright.y += 653;
+	add(glowright);
+
+    var floor:FlxSprite = new FlxSprite(2, 931);
+	floor.loadGraphic(Paths.image('death/floor'));
+	floor.antialiasing = true;
+	floor.setGraphicSize(Std.int(floor.width * resizeBG * 2));
+	floor.updateHitbox();
+	add(floor);				
+
+	var roof:FlxSprite = new FlxSprite(130, 100);
+	roof.loadGraphic(Paths.image('death/roof'));
+	roof.scrollFactor.set(1.1, 1.1);
+	roof.setGraphicSize(Std.int(roof.width * resizeBG * 2));
+	roof.updateHitbox();
+	roof.antialiasing = true;
+	add(roof);
+
+	var pilfor:FlxSprite = new FlxSprite(2132, 1282);
+	pilfor.loadGraphic(Paths.image('death/pilfor'));
+	pilfor.scrollFactor.set(1.2, 1.2);
+	pilfor.setGraphicSize(Std.int(pilfor.width * resizeBG * 2));
+	pilfor.updateHitbox();
+	pilfor.antialiasing = true;
+	add(pilfor);
+
+	pillar = new FlxSprite().loadGraphic(Paths.image('death/pil'));
+	pillar.setPosition(840, 553);
+	pillar.setGraphicSize(Std.int(pillar.width * 0.75 * 2));
+	pillar.updateHitbox();
+	add(pillar);*/
 		}
 
 		if (isPixelStage)
@@ -692,8 +812,8 @@ class PlayState extends MusicBeatState
 				gf.dance();
 			}
 			if (tmr.loopsLeft % boyfriend.danceEveryNumBeats == 0
-				&& boyfriend.animation.curAnim != null
-				&& !boyfriend.animation.curAnim.name.startsWith('sing')
+				&& boyfriend.atlasAnimation != null
+				&& !boyfriend.atlasAnimation.startsWith('sing')
 				&& !boyfriend.stunned)
 			{
 				boyfriend.dance();
@@ -1337,8 +1457,8 @@ class PlayState extends MusicBeatState
 				keyShit();
 			}
 			else if (boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration
-				&& boyfriend.animation.curAnim.name.startsWith('sing')
-				&& !boyfriend.animation.curAnim.name.endsWith('miss'))
+				&& boyfriend.atlasAnimation.startsWith('sing')
+				&& !boyfriend.atlasAnimation.endsWith('miss'))
 				boyfriend.dance();
 
 			cameraDisplacement(boyfriend, true);
@@ -2343,7 +2463,7 @@ class PlayState extends MusicBeatState
 
 			if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && (!holdArray.contains(true) || cpuControlled))
 			{
-				if (boyfriend.animation.curAnim.name.startsWith("sing") && !boyfriend.animation.curAnim.name.endsWith("miss"))
+				if (boyfriend.atlasAnimation.startsWith("sing") && !boyfriend.atlasAnimation.endsWith("miss"))
 					boyfriend.playAnim('idle');
 			}
 
@@ -2803,8 +2923,8 @@ class PlayState extends MusicBeatState
 			gf.dance();
 		}
 		if (curBeat % boyfriend.danceEveryNumBeats == 0
-			&& boyfriend.animation.curAnim != null
-			&& !boyfriend.animation.curAnim.name.startsWith('sing')
+			&& boyfriend.atlasAnimation != ""
+			&& !boyfriend.atlasAnimation.startsWith('sing')
 			&& !boyfriend.stunned)
 		{
 			boyfriend.dance();
