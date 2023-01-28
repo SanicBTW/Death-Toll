@@ -1,0 +1,100 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "OldMan_Idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				41,
+				7
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "OldMan_Up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				33,
+				-9
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "OldMan_Down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				76,
+				-4
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "OldMan_Left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-18,
+				-4
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "OldMan_Right",
+			"indices": []
+		},
+		{
+			"offsets": [
+				70,
+				18
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "walk",
+			"indices": [],
+			"name": "OldMan_Walk"
+		},
+		{
+			"offsets": [
+				187,
+				29
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "laugh",
+			"indices": [],
+			"name": "OldMan_Laugh"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/beelze_normal",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "beelze",
+	"flip_x": false,
+	"healthbar_colors": [
+		126,
+		93,
+		145
+	],
+	"camera_position": [
+		-400,
+		190
+	],
+	"sing_duration": 6.1,
+	"scale": 0.7
+}

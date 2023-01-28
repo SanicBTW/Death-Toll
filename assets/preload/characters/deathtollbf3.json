@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				-50,
+				-100
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "bf idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-49,
+				-92
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "bf up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-49,
+				-106
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "bf down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-48,
+				-98
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "bf left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-50,
+				-100
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "bf right",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/deathtollbf",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "bf",
+	"flip_x": true,
+	"healthbar_colors": [
+		49,
+		176,
+		209
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 0.5
+}
